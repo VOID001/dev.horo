@@ -1,6 +1,8 @@
-obj-m += hello-kernel.o
+obj-m += horok.o
 
 KERN_DIR = /lib/modules/$(shell uname -r)/build
+
+MODULE_NAME = horok.ko
 
 all:
 	make -C $(KERN_DIR) M=$(PWD) modules
@@ -8,8 +10,8 @@ all:
 
 install:
 	make -C $(KERN_DIR) M=$(PWD) modules
-	- sudo rmmod hello-kernel
-	- sudo insmod hello-kernel.ko
+	- sudo rmmod $(MODULE_NAME)
+	- sudo insmod $(MODULE_NAME)
 
 clean:
 	make -C $(KERN_DIR) M=$(PWD) clean
