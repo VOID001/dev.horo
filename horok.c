@@ -59,10 +59,14 @@ static ssize_t horo_write(struct file *filp, const char __user *buf,
 static long horo_ioctl(struct file *filp, unsigned int op, 
 		unsigned long paramp) 
 {
+
+	char __user *userdat = (char *)paramp;
+	int ret;
+
 	memset(kbuf, 0, sizeof(kbuf));
-	sprintf(kbuf, "%s", (char *)paramp);
-	pr_info("IOCTL Recv Message: %s\n", (char *)paramp);
-	return 0;
+	ret = copy_from_user(kbuf, userdat, PAGE_SIZE);
+	pr_info("IOCTL Recv Message: %s\n", kbuf);
+	return ret;
 }
 
 const struct file_operations misc_fops = {
