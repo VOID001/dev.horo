@@ -29,6 +29,7 @@ static int call_horoproxy(char *cmd) {
 		NULL
 	};
 
+	schedule();
 	sub_info = call_usermodehelper_setup(argv[0], argv, envp, GFP_ATOMIC, NULL, NULL, NULL);
 	if (sub_info == NULL) return -ENOMEM;
 	return call_usermodehelper_exec(sub_info, UMH_WAIT_PROC);
@@ -46,7 +47,7 @@ static ssize_t horo_write(struct file *filp, const char __user *buf,
 	ret = simple_write_to_buffer(kbuf, sizeof(kbuf), offp, buf, count);
 	if (ret < 0)
 		return ret;
-	pr_info("Kbuf: %s", kbuf);
+	pr_debug("Kbuf: %s", kbuf);
 	ret = call_horoproxy(kbuf);
 	kfree(cmdbuf);
 	if(ret == 0)
@@ -65,7 +66,7 @@ static long horo_ioctl(struct file *filp, unsigned int op,
 
 	memset(kbuf, 0, sizeof(kbuf));
 	ret = copy_from_user(kbuf, userdat, PAGE_SIZE);
-	pr_info("IOCTL Recv Message: %s\n", kbuf);
+	pr_debug("IOCTL Recv Message: %s\n", kbuf);
 	return ret;
 }
 
@@ -80,7 +81,7 @@ int horo_init(void)
 {
 	int ret;
 
-	pr_info("Start init misc device horo\n");
+	pr_debug("Start init misc device horo\n");
 	misc.minor = MISC_DYNAMIC_MINOR;
 	misc.mode = 0666;
 	misc.name = "horo";
@@ -95,7 +96,7 @@ int horo_init(void)
 
 void horo_exit(void)
 {
-	pr_info("Start de-init misc device horo\n");
+	pr_debug("Start de-init misc device horo\n");
 	misc_deregister(&misc);
 }
 
