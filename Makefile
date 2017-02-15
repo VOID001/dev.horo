@@ -12,7 +12,7 @@ all:
 
 install:
 	make -C $(KERN_DIR) M=$(shell pwd) modules
-	cp $(HOROPROXY) /usr/local/bin
+	install -Dm755 $(HOROPROXY) $(DESTDIR)/usr/local/bin
 	- rmmod $(MODULE_NAME)
 	- insmod $(MODULE_NAME)
 
