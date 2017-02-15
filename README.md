@@ -5,7 +5,7 @@ Horo in your Linux
 
 ### Build Instructions
 
-* make
+* make && sudo make install
 
 * make test
 
