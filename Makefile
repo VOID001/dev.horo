@@ -13,8 +13,10 @@ all:
 install:
 	make -C $(KERN_DIR) M=$(shell pwd) modules
 	install -Dm755 $(HOROPROXY) $(DESTDIR)/usr/local/bin
+ifndef PKGBUILD
 	- rmmod $(MODULE_NAME)
 	- insmod $(MODULE_NAME)
+endif
 
 uninstall:
 	- rmmod $(MODULE_NAME)
