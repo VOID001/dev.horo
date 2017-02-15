@@ -20,7 +20,7 @@ endif
 
 uninstall:
 	- rmmod $(MODULE_NAME)
-	- rm /usr/local/bin/horoproxy
+	- rm $(DESTDIR)/usr/local/bin/horoproxy
 
 clean:
 	make -C $(KERN_DIR) M=$(shell pwd) clean
