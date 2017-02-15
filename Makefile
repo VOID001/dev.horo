@@ -1,29 +1,27 @@
 obj-m += horok.o
 
 KERN_DIR = /lib/modules/$(shell uname -r)/build
-
 MODULE_NAME = horok.ko
-
 HOROPROXY = horoproxy/horoproxy
 
 .PHONY: all install clean test
 
 all: 
 	cd horoproxy; go build
-	make -C $(KERN_DIR) M=$(PWD) modules
+	make -C $(KERN_DIR) M=$(shell pwd) modules
 
 install:
-	make -C $(KERN_DIR) M=$(PWD) modules
-	sudo cp $(HOROPROXY) /usr/local/bin
-	- sudo rmmod $(MODULE_NAME)
-	- sudo insmod $(MODULE_NAME)
+	make -C $(KERN_DIR) M=$(shell pwd) modules
+	cp $(HOROPROXY) /usr/local/bin
+	- rmmod $(MODULE_NAME)
+	- insmod $(MODULE_NAME)
 
 uninstall:
-	- sudo rmmod $(MODULE_NAME)
-	- sudo rm /usr/local/bin/horoproxy
+	- rmmod $(MODULE_NAME)
+	- rm /usr/local/bin/horoproxy
 
 clean:
-	make -C $(KERN_DIR) M=$(PWD) clean
+	make -C $(KERN_DIR) M=$(shell pwd) clean
 	rm $(HOROPROXY)
 
 test:

@@ -11,6 +11,7 @@ Horo in your Linux
 
 ### Build Requirment
 
+* linux-headers
 * go (> 1.6)
 
 ### Supported Functions (Keep Updating...)
