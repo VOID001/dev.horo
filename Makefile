@@ -13,6 +13,7 @@ all:
 install:
 	make -C $(KERN_DIR) M=$(shell pwd) modules
 	install -Dm755 $(HOROPROXY) $(DESTDIR)/usr/local/bin
+	install -Dm644 $(MODULE_NAME) $(DESTDIR)/lib/modules/$(shell uname -r)/
 ifndef PKGBUILD
 	- rmmod $(MODULE_NAME)
 	- insmod $(MODULE_NAME)
@@ -20,7 +21,8 @@ endif
 
 uninstall:
 	- rmmod $(MODULE_NAME)
-	- rm $(DESTDIR)/usr/local/bin/horoproxy
+	- rm /usr/local/bin/horoproxy
+	- rm $(DESTDIR)/lib/modules/$(shell uname -r)/$(MODULE_NAME)
 
 clean:
 	make -C $(KERN_DIR) M=$(shell pwd) clean
