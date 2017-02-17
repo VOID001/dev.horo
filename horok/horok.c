@@ -22,7 +22,7 @@ static ssize_t horo_read(struct file *filp, char __user *buf,
 // call_horoproxy calls usermode helper: horoproxy to do real tasks
 static int call_horoproxy(char *cmd) {
 	struct subprocess_info *sub_info;
-	char *argv[] = {"/usr/local/bin/horoproxy", cmd, NULL};
+	char *argv[] = {"/usr/bin/horoproxy", cmd, NULL};
 	static char *envp[] = {
 		"HOME=/",
 		"TERM=linux",
