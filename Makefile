@@ -1,6 +1,6 @@
 obj-m += horok.o
-
-KERN_DIR = /lib/modules/$(shell uname -r)/build
+KERNVER = $(shell uname -r)
+KERN_DIR = /lib/modules/$(KERNVER)/build
 MODULE_NAME = horok.ko
 HOROPROXY = horoproxy/horoproxy
 
